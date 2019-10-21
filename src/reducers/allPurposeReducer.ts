@@ -1,12 +1,6 @@
 import { AllActionTypes } from "../types/index";
 
-const allReducerDefaultState = {
-    allContestants: [],
-    allResults: [],
-    contestant: {},
-    result: {},
-    tournament: {},
-};
+const allReducerDefaultState = {};
 
 const allPurposeReducer = ( state = allReducerDefaultState, action: AllActionTypes ) => {
     switch (action.type) {
