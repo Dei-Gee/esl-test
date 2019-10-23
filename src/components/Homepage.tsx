@@ -48,7 +48,8 @@ class Homepage extends React.Component<Props, IHomepageState> {
         return (
             <div>
                 <header>
-
+                    <h1 className="tourney-name">Tournament Name</h1>
+                    <p className="tourney-date">The date of the tournament</p>
                 </header>
             </div>
          );

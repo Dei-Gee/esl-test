@@ -2,4 +2,39 @@ html {
     width: 100vw;
     height: 100vh;
     background-color: #cccccc;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+body {
+    width: 95%;
+    height: 95%;
+    background-color: transparent;
+    margin: 2.5% auto;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: white;
+    border-top: 15px solid green;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+}
+
+header > * {
+    text-align: left;
+}
+
+header > .tourney-name {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: .75em;
+    padding-left: 1em;
+}
+
+header > .tourney-date {
+    padding-left: 2em;
+    padding-bottom: 1em;
 }
