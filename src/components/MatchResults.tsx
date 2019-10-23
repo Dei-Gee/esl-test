@@ -5,7 +5,6 @@ import axios from "axios";
 import { timeStringToDate, sortResults } from "../utils/utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { Fragment } from "react";
 
 export interface IMatchResultsProps {
     tourneyId: string;
@@ -80,8 +79,6 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
         event.preventDefault();
         var sortingOrder: string = event.currentTarget.value;
 
-        console.log(sortingOrder); 
-
         this.sortArray(this.state.allResults, sortingOrder);
 
         this.setState({
@@ -92,8 +89,6 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
 
     public render() {
         const allResultsProp = this.state.allResults;
-        console.log(this.state.allResults);
-        console.log(this.state.allContestants);
 
         let mappedResults = allResultsProp.map((result, index) => {
             let team1Points = result.participants[0].points;
