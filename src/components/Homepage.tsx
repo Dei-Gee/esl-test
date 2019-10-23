@@ -1,17 +1,18 @@
-import axios from "axios";
-import React, { Component, Dispatch } from "react";
+import React, {  } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { startGetAllContestants } from "../actions";
+import { startGetAllContestants, startGetAllResults } from "../actions";
 import { AppState } from "../store/configureStore";
-import { AppActions, GET_ALL_CONTESTANTS } from "../types";
+import { AppActions } from "../types";
 import { Contestant } from "../types/Contestant";
 import { Result } from "../types/Result";
 import { Tournament } from "../types/Tournament";
+import "./styles/Homepage.css";
 
 export interface IHomepageProps {
     allContestants: Contestant[];
+    allResults: Result[];
 }
 
 interface IHomepageState {}
@@ -19,29 +20,36 @@ interface IHomepageState {}
 type Props = IHomepageProps & ILinkStateProps & ILinkDispatchProps;
 
 class Homepage extends React.Component<Props, IHomepageState> {
-    public onLoad = () => {
-        this.props.startGetAllContestants();
-      }
-
       public componentWillMount = () => {
-        this.onLoad();
+        this.props.startGetAllContestants();
+        this.props.startGetAllResults();
       }
 
     public render() {
         const allContestantsProp = this.props.allContestants;
+        const allResultsProp = this.props.allResults;
+
         let mappedContestants;
+        let mappedResults;
+
         if (allContestantsProp) {
-            mappedContestants = this.props.allContestants.map((contestant,index) => {
+            mappedContestants = this.props.allContestants.map((contestant, index) => {
                 return <li key={index}>{contestant.name}</li>;
             });
         }
 
+        // if (allResultsProp) {
+        //     mappedResults = this.props.allResults.map((result, index) => {
+        //         return <li key={index}> {result.participants.map((participant, pindex) => <span key={pindex}>{participant.points}</span>)} </li>; });
+        // }
+
+        console.log(mappedResults);
+
         return (
             <div>
-                <h1>Blah</h1>
-                <ul>
-                    {mappedContestants}
-                </ul>
+                <header>
+
+                </header>
             </div>
          );
     }
@@ -56,11 +64,11 @@ interface ILinkStateProps {
   }
 interface ILinkDispatchProps {
     startGetAllContestants: () => void;
+    startGetAllResults: () => void;
   }
 
 const mapStateToProps = (
     state: AppState,
-    ownProps: IHomepageProps,
   ): ILinkStateProps => ({
     allContestants: state.allContestants.allContestants,
     allResults: state.allResults.allResults,
@@ -71,9 +79,9 @@ const mapStateToProps = (
 
 const mapDispatchToProps = (
     dispatch: ThunkDispatch<any, any, AppActions>,
-    ownProps: IHomepageProps,
   ): ILinkDispatchProps => ({
     startGetAllContestants: bindActionCreators(startGetAllContestants, dispatch),
+    startGetAllResults: bindActionCreators(startGetAllResults, dispatch),
   });
 
 export default connect(
