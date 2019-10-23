@@ -2,17 +2,25 @@ import React, {  } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { startGetAllContestants, startGetAllResults } from "../actions";
+import { startGetAllContestants, startGetAllResults, startGetTournament } from "../actions";
 import { AppState } from "../store/configureStore";
 import { AppActions } from "../types";
 import { Contestant } from "../types/Contestant";
 import { Result } from "../types/Result";
 import { Tournament } from "../types/Tournament";
+import { dateTimeStringToDate } from "../utils/utilities";
+import MatchResults from "./MatchResults";
 import "./styles/Homepage.css";
 
 export interface IHomepageProps {
-    allContestants: Contestant[];
-    allResults: Result[];
+    tournament: Tournament;
+    history: {};
+    match: {
+        params: {
+            tourneyId: string;
+        },
+    };
+    location: {};
 }
 
 interface IHomepageState {}
@@ -20,91 +28,58 @@ interface IHomepageState {}
 type Props = IHomepageProps & ILinkStateProps & ILinkDispatchProps;
 
 class Homepage extends React.Component<Props, IHomepageState> {
-      public componentWillMount = () => {
-        this.props.startGetAllContestants();
-        this.props.startGetAllResults();
-      }
+      public componentDidMount = async () => {
+        try {
+            this.props.startGetTournament(this.props.match.params.tourneyId);
+        } catch (e) {
+            console.log("can't get items");
+        }
+    }
 
     public render() {
-        const allContestantsProp = this.props.allContestants;
-        const allResultsProp = this.props.allResults;
+        const tournamentProp = this.props.tournament;
 
-        let mappedContestants;
-        let mappedResults;
+        console.log(tournamentProp);
 
-        if (allContestantsProp) {
-            mappedContestants = this.props.allContestants.map((contestant, index) => {
-                return <li key={index}>{contestant.name}</li>;
-            });
+        if (tournamentProp) {
+            return (
+                <div>
+                    <header>
+                        <h1 className="tourney-name">{tournamentProp.name.normal}</h1>
+                        <p className="tourney-date">{dateTimeStringToDate(tournamentProp.timeline.inProgress.begin)}</p>
+                    </header>
+
+                    <section className="main">
+                        <MatchResults tourneyId={tournamentProp.id} />
+                    </section>
+
+                </div>
+             );
+        } else {
+            return(
+                <div> The data could not be fetched in time </div>
+            );
         }
-
-        // if (allResultsProp) {
-        //     mappedResults = this.props.allResults.map((result, index) => {
-        //         return <li key={index}> {result.participants.map((participant, pindex) => <span key={pindex}>{participant.points}</span>)} </li>; });
-        // }
-
-        console.log(mappedResults);
-
-        return (
-            <div>
-                <header>
-                    <h1 className="tourney-name">Tournament Name</h1>
-                    <p className="tourney-date">The date of the tournament</p>
-                </header>
-
-                <section className="main">
-                    <div className="result-filter">
-                        <select>
-                            <option>Date: Ascending</option>
-                            <option>Date: Descending</option>
-                        </select>
-                    </div>
-
-                    <section className="score-wrapper">
-                        <div className="match-time">Time</div>
-                        <div className="team"><span>Team 1</span> <span>0</span></div>
-                        <div className="team"><span>Team 1</span> <span>0</span></div>
-                    </section>
-
-                    <section className="score-wrapper">
-                        <div className="match-time">Time</div>
-                        <div className="team"><span>Team 1</span> <span>0</span></div>
-                        <div className="team"><span>Team 1</span> <span>0</span></div>
-                    </section>
-                </section>
-
-            </div>
-         );
     }
 }
 
 interface ILinkStateProps {
-    allContestants: Contestant[];
-    allResults: Result[];
-    contestant: Contestant;
-    result: Result;
     tournament: Tournament;
   }
 interface ILinkDispatchProps {
-    startGetAllContestants: () => void;
-    startGetAllResults: () => void;
+    startGetTournament: (id: string) => void;
   }
 
 const mapStateToProps = (
     state: AppState,
   ): ILinkStateProps => ({
-    allContestants: state.allContestants.allContestants,
-    allResults: state.allResults.allResults,
-    contestant: state.contestant.contestant,
-    result: state.result.result,
     tournament: state.tournament.tournament,
   });
 
 const mapDispatchToProps = (
     dispatch: ThunkDispatch<any, any, AppActions>,
   ): ILinkDispatchProps => ({
-    startGetAllContestants: bindActionCreators(startGetAllContestants, dispatch),
-    startGetAllResults: bindActionCreators(startGetAllResults, dispatch),
+    startGetTournament: bindActionCreators(startGetTournament, dispatch),
   });
 
 export default connect(

@@ -1,6 +1,7 @@
 import { createBrowserHistory } from "history";
 import React from "react";
 import { Link, NavLink, Route, Router, Switch } from "react-router-dom";
+import ErrorPage from "../components/ErrorPage";
 import Homepage from "../components/Homepage";
 
 export const history = createBrowserHistory();
@@ -11,7 +12,8 @@ const AppRouter = () => (
   <Router history={history}>
     <div>
       <Switch>
-        <Route path="/" component={Homepage} />
+        <Route path="/:tourneyId" component={Homepage} exact />
+        <Route component={ErrorPage} />
       </Switch>
     </div>
   </Router>
