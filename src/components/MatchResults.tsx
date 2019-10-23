@@ -1,4 +1,4 @@
-import { connect } from "http2";
+import { connect } from "react-redux";
 import * as React from "react";
 import { bindActionCreators } from "redux";
 import { ThunkDispatch } from "redux-thunk";
@@ -10,25 +10,34 @@ import { Result } from "../types/Result";
 
 export interface IMatchResultsProps {
     allResults: Result[];
+    allContestants: Contestant[];
+    tourneyId: string;
 }
 
 export interface IMatchResultsState {
 
 }
 
-class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsState> {
+type Props = IMatchResultsProps & ILinkStateProps & ILinkDispatchProps;
+
+class MatchResults extends React.Component<Props, IMatchResultsState> {
 
     public componentDidMount = () => {
         try {
-            this.props.startGetAllResults();
+            if(this.props.allResults === null || this.props.allResults || undefined)
+            {
+                this.props.startGetAllResults();
+                this.props.startGetAllContestants(this.props.tourneyId);
+            }
         } catch (e) {
             console.log("can't get items");
         }
     }
 
     public render() {
+        console.log(this.props.tourneyId)
         return (
-            <div>
+            <div className="main">
                 <div className="result-filter">
                     <select>
                         <option>Date: Ascending</option>
@@ -53,19 +62,19 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
 }
 
 interface ILinkStateProps {
-    contestants: Contestant[];
-    results: Result[];
+    allContestants: Contestant[];
+    allResults: Result[];
   }
 interface ILinkDispatchProps {
-    startGetAllContestants: () => void;
+    startGetAllContestants: (tourneyId: string) => void;
     startGetAllResults: () => void;
   }
 
 const mapStateToProps = (
     state: AppState,
   ): ILinkStateProps => ({
-    contestants: state.allContestants.allContestants,
-    results: state.allResults.allResults,
+    allContestants: state.allContestants.allContestants,
+    allResults: state.allResults.allResults,
   });
 
 const mapDispatchToProps = (

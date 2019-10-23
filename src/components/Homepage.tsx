@@ -28,9 +28,12 @@ interface IHomepageState {}
 type Props = IHomepageProps & ILinkStateProps & ILinkDispatchProps;
 
 class Homepage extends React.Component<Props, IHomepageState> {
-      public componentDidMount = async () => {
+      public componentDidMount = () => {
         try {
-            this.props.startGetTournament(this.props.match.params.tourneyId);
+            if(this.props.tournament === null || this.props.tournament === undefined)
+            {
+                this.props.startGetTournament(this.props.match.params.tourneyId);
+            }
         } catch (e) {
             console.log("can't get items");
         }
@@ -40,9 +43,12 @@ class Homepage extends React.Component<Props, IHomepageState> {
         const tournamentProp = this.props.tournament;
 
         console.log(tournamentProp);
-
-        if (tournamentProp) {
+        if (this.props.tournament === null || this.props.tournament === undefined) {
             return (
+                <div> Loading... </div>                
+             );
+        } else {
+            return(
                 <div>
                     <header>
                         <h1 className="tourney-name">{tournamentProp.name.normal}</h1>
@@ -50,14 +56,10 @@ class Homepage extends React.Component<Props, IHomepageState> {
                     </header>
 
                     <section className="main">
-                        <MatchResults tourneyId={tournamentProp.id} />
+                        <MatchResults tourneyId={tournamentProp.id.toString()}  />
                     </section>
 
                 </div>
-             );
-        } else {
-            return(
-                <div> The data could not be fetched in time </div>
             );
         }
     }
