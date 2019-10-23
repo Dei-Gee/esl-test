@@ -1,6 +1,6 @@
 import { createBrowserHistory } from "history";
 import React from "react";
-import { Link, NavLink, Route, Router, Switch } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
 import ErrorPage from "../components/ErrorPage";
 import Homepage from "../components/Homepage";
 

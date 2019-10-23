@@ -1,14 +1,8 @@
-import { connect } from "react-redux";
 import * as React from "react";
-import { bindActionCreators } from "redux";
-import { ThunkDispatch } from "redux-thunk";
-import { startGetAllContestants, startGetAllResults, startGetTournament } from "../actions";
-import { AppState } from "../store/configureStore";
-import { AppActions } from "../types";
 import { Contestant } from "../types/Contestant";
 import { Result } from "../types/Result";
 import axios from "axios";
-import { dateTimeStringToDate, timeStringToDate } from "../utils/utilities";
+import { timeStringToDate, sortResults } from "../utils/utilities";
 
 export interface IMatchResultsProps {
     tourneyId: string;
@@ -17,6 +11,7 @@ export interface IMatchResultsProps {
 export interface IMatchResultsState {
     allResults: Result[];
     allContestants: Contestant[];
+    sortingOrder: string;
 }
 
 
@@ -24,14 +19,17 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
     constructor(props: any)
     {
         super(props);
+        this.onChangeOrder = this.onChangeOrder.bind(this);
         this.state = {
             allResults: [], 
-            allContestants: []
+            allContestants: [], 
+            sortingOrder: "", // default sorting order none
         }
     }
 
     public componentDidMount = () => {
         try {
+            // one render to rule them all - yay for Promises
             Promise.all([
                 axios.get(`https://api.eslgaming.com/play/v1/leagues/${this.props.tourneyId}/results`)
                 .then((response) => {
@@ -43,8 +41,8 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
                 })
             ]).then(([results, contstants]) => {
                 this.setState({
-                    allResults : results,
-                    allContestants : contstants
+                    allResults : sortResults(results, "ascending"),
+                    allContestants : contstants,
                 })
             })
         } catch (e) {
@@ -52,6 +50,8 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
         }
     }
 
+    
+    // getting team/contestant name
     public getContestant = (contestantId: number | string) => {
         let name: string = "";
         for(let i:number = 0; i < this.state.allContestants.length; i++)
@@ -64,13 +64,35 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
         return name;
     }
 
+    // sorting and assigning the results array to the state
+    public sortArray = (myArr: Result[], order: string) => {
+        sortResults(myArr, order);
+        this.setState({
+            allResults: myArr
+        })
+    }
+
+    // event handler for sorting order of results
+    public onChangeOrder = (event: React.FormEvent<HTMLSelectElement>) => {
+        event.preventDefault();
+        var sortingOrder: string = event.currentTarget.value;
+
+        console.log(sortingOrder); 
+
+        this.sortArray(this.state.allResults, sortingOrder);
+
+        this.setState({
+            sortingOrder: sortingOrder
+        });
+
+    }
+
     public render() {
         const allResultsProp = this.state.allResults;
-        const allContestantsProp = this.state.allContestants;
         console.log(this.state.allResults);
         console.log(this.state.allContestants);
 
-        const mappedResults = allResultsProp.map((result, index) => {
+        let mappedResults = allResultsProp.map((result, index) => {
             let team1Points = result.participants[0].points;
             let team2Points = result.participants[1].points;
             return <section className="score-wrapper" key={index}>
@@ -89,10 +111,10 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
         return (
             <div className="main">
                 <div className="result-filter">
-                    <select>
-                        <option>Date: Ascending</option>
-                        <option>Date: Descending</option>
-                    </select>
+                <select className="form-control" id="searchType" onChange={ e => this.onChangeOrder(e) } value={ this.state.sortingOrder }>
+                    <option value="ascending">Date: Ascending</option>
+                    <option value="descending">Date: Descending</option>
+                </select>
                 </div>
 
                 {mappedResults}
