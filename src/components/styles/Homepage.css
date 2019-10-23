@@ -16,8 +16,11 @@ body {
 }
 
 header {
-    background-color: white;
     border-top: 15px solid green;
+}
+
+header, .main {
+    background-color: white;
     display: flex;
     flex-direction: column;
     border-radius: 3px;
@@ -27,14 +30,80 @@ header > * {
     text-align: left;
 }
 
-header > .tourney-name {
+header > .tourney-name, .team, .match-time {
     margin-top: 0;
     margin-bottom: 0;
     padding-top: .75em;
     padding-left: 1em;
+    padding-right: 1em;
+}
+
+.main {
+    margin-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.main > .result-filter {
+    padding-top: .75em;
+}
+
+.result-filter {
+    display: flex;
+    align-self: flex-end;
+}
+
+.score-wrapper:first-child {
+    margin-top: .75em;
+}
+
+.score-wrapper:nth-child(2n) {
+    border-bottom: 1px solid #cccccc;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.score-wrapper:nth-child(2n + 1) {
+    border-top: 1px solid #cccccc;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.match-time {
+    margin-top: .75em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+.team {
+    display: flex;
+    justify-content: space-between;
+    padding: .75em;
+    border-left: 10px solid green;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    margin-top: 1em;
+}
+
+.team:last-child {
+    margin-bottom: 1.75em;
+    border-left: 10px solid red;
+}
+
+.team > span {
+    display: inline;
+    font-size: larger;
+    font-weight: 400;
+    line-height: 50%;
+}
+
+.team > span:last-child {
+    font-size: xx-large;
+    font-weight: 400;
 }
 
 header > .tourney-date {
     padding-left: 2em;
+    padding-right: 2em;
     padding-bottom: 1em;
 }

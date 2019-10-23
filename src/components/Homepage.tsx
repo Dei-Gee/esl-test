@@ -51,6 +51,28 @@ class Homepage extends React.Component<Props, IHomepageState> {
                     <h1 className="tourney-name">Tournament Name</h1>
                     <p className="tourney-date">The date of the tournament</p>
                 </header>
+
+                <section className="main">
+                    <div className="result-filter">
+                        <select>
+                            <option>Date: Ascending</option>
+                            <option>Date: Descending</option>
+                        </select>
+                    </div>
+
+                    <section className="score-wrapper">
+                        <div className="match-time">Time</div>
+                        <div className="team"><span>Team 1</span> <span>0</span></div>
+                        <div className="team"><span>Team 1</span> <span>0</span></div>
+                    </section>
+
+                    <section className="score-wrapper">
+                        <div className="match-time">Time</div>
+                        <div className="team"><span>Team 1</span> <span>0</span></div>
+                        <div className="team"><span>Team 1</span> <span>0</span></div>
+                    </section>
+                </section>
+
             </div>
          );
     }
