@@ -6,23 +6,12 @@ import { AppActions, GET_ALL_CONTESTANTS, GET_ALL_RESULTS, GET_TOURNAMENT, GET_C
 import { Result } from "./../types/Result";
 import { Tournament } from "./../types/Tournament";
 
-export const getAllContestants = (contestants: Contestant[]): AppActions => ({
-    contestants,
-    type: GET_ALL_CONTESTANTS,
-});
-
-export const getAllResults = (results: Result[]): AppActions => ({
-    results,
-    type: GET_ALL_RESULTS,
-});
-
-export const getTournament = (tournament: Tournament): AppActions => ({
-    tournament,
-    type: GET_TOURNAMENT,
-});
-
-
 export const startGetAllContestants = (tourneyId: string) => {
+    const getAllContestants = (contestants: Contestant[]): AppActions => ({
+        contestants,
+        type: GET_ALL_CONTESTANTS,
+    });
+
     return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
         axios.get(`https://api.eslgaming.com/play/v1/leagues/${tourneyId}/contestants`)
         .then((response) => {
@@ -32,16 +21,27 @@ export const startGetAllContestants = (tourneyId: string) => {
     };
 };
 
-export const startGetAllResults = () => {
+export const startGetAllResults = (tourneyId: string) => {
+    const getAllResults = (results: Result[]): AppActions => ({
+        results,
+        type: GET_ALL_RESULTS,
+    });
+
     return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
-        axios.get("https://api.eslgaming.com/play/v1/leagues/177161/results")
+        axios.get(`https://api.eslgaming.com/play/v1/leagues/${tourneyId}/results`)
         .then((response) => {
-            dispatch(getAllResults(response.data));
+            (response.data) ? dispatch(getAllResults(response.data)) : console.log("could not get data");
         });
+        
     };
 };
 
 export const startGetTournament = (tourneyId: string) => {
+    const getTournament = (tournament: Tournament): AppActions => ({
+        tournament,
+        type: GET_TOURNAMENT,
+    });
+    
     return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
         axios.get(`https://api.eslgaming.com/play/v1/leagues/${tourneyId}`)
         .then((response) => {

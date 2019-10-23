@@ -1,9 +1,15 @@
+* {
+    box-sizing: border-box;
+}
+
 html {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     background-color: #cccccc;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
     justify-content: center;
+
 }
 
 body {
@@ -57,17 +63,27 @@ header > .tourney-name, .team, .match-time {
     margin-top: .75em;
 }
 
-.score-wrapper:nth-child(2n) {
+.score-wrapper {
+    border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
     padding-left: 1em;
     padding-right: 1em;
 }
 
-.score-wrapper:nth-child(2n + 1) {
+.score-wrapper:first-of-type{
+    border-top: 0px solid transparent;
+    border-bottom: 1px solid #cccccc;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.score-wrapper:last-of-type{
+    border-bottom: 0px solid transparent;
     border-top: 1px solid #cccccc;
     padding-left: 1em;
     padding-right: 1em;
 }
+
 
 .match-time {
     margin-top: .75em;
@@ -79,7 +95,7 @@ header > .tourney-name, .team, .match-time {
     display: flex;
     justify-content: space-between;
     padding: .75em;
-    border-left: 10px solid green;
+    border-left: 10px solid black;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     margin-top: 1em;
@@ -87,23 +103,37 @@ header > .tourney-name, .team, .match-time {
 
 .team:last-child {
     margin-bottom: 1.75em;
-    border-left: 10px solid red;
 }
 
 .team > span {
     display: inline;
     font-size: larger;
-    font-weight: 400;
     line-height: 50%;
 }
 
-.team > span:last-child {
+.team > .score {
     font-size: xx-large;
-    font-weight: 400;
+    text-align: right;
 }
 
 header > .tourney-date {
     padding-left: 2em;
     padding-right: 2em;
     padding-bottom: 1em;
+}
+
+.winner {
+    border-left: 10px solid green;
+}
+
+.winning-score {
+    font-weight: 600;
+}
+
+.loser {
+    border-left: 10px solid red;
+}
+
+.losing-score {
+    font-weight: 300;
 }

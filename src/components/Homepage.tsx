@@ -42,7 +42,6 @@ class Homepage extends React.Component<Props, IHomepageState> {
     public render() {
         const tournamentProp = this.props.tournament;
 
-        console.log(tournamentProp);
         if (this.props.tournament === null || this.props.tournament === undefined) {
             return (
                 <div> Loading... </div>                
