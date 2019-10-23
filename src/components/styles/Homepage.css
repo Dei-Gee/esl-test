@@ -50,13 +50,13 @@ header > .tourney-name, .team, .match-time {
     padding-right: 1em;
 }
 
-.main > .result-filter {
-    padding-top: .75em;
-}
 
 .result-filter {
     display: flex;
     align-self: flex-end;
+    border: 1px solid #cccccc;
+    justify-content: right;
+    width: 15rem;
 }
 
 .score-wrapper:first-child {
@@ -136,4 +136,32 @@ header > .tourney-date {
 
 .losing-score {
     font-weight: 300;
+}
+
+#searchType {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  display: flex;
+  align-self: flex-end;
+  text-align: center;
+  padding: .75em;
+  width: 90%;
+}
+
+.arrow {
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    vertical-align: middle;
+    margin: 0 auto;
+}
+
+select#searchType option {
+  text-align: center;
+  padding: .75em;
+}
+
+#searchType::-ms-expand {
+    display: none;
 }

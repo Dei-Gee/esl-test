@@ -3,6 +3,9 @@ import { Contestant } from "../types/Contestant";
 import { Result } from "../types/Result";
 import axios from "axios";
 import { timeStringToDate, sortResults } from "../utils/utilities";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { Fragment } from "react";
 
 export interface IMatchResultsProps {
     tourneyId: string;
@@ -111,10 +114,14 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
         return (
             <div className="main">
                 <div className="result-filter">
-                <select className="form-control" id="searchType" onChange={ e => this.onChangeOrder(e) } value={ this.state.sortingOrder }>
-                    <option value="ascending">Date: Ascending</option>
-                    <option value="descending">Date: Descending</option>
-                </select>
+                    <select className="form-control" id="searchType" onChange={ e => this.onChangeOrder(e) } value={ this.state.sortingOrder }>
+                        <option value="ascending" className="opts">Date: Ascending </option>
+                        <option value="descending" className="opts">Date: Descending </option>
+                    </select>
+                    {this.state.sortingOrder === "ascending" || this.state.sortingOrder === ""? 
+                        <FontAwesomeIcon icon={faCaretUp} className="arrow" /> :
+                        <FontAwesomeIcon icon={faCaretDown} className="arrow" />
+                    }
                 </div>
 
                 {mappedResults}
