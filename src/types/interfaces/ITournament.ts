@@ -125,5 +125,5 @@ export interface ITournament {
             maxMembers: number;
         };
     };
-    cupMode: "single_3rd";
+    cupMode: string;
 }

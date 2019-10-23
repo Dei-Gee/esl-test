@@ -1,6 +1,6 @@
-import { IContestant } from "./IContestant";
-import { IResult } from "./IResult";
-import { ITournament } from "./ITournament";
+import { Contestant } from "./Contestant";
+import { Result } from "./Result";
+import { Tournament } from "./Tournament";
 
 // action strings
 export const GET_ALL_CONTESTANTS = "GET ALL CONTESTANTS";
@@ -11,27 +11,27 @@ export const GET_TOURNAMENT = "GET TOURNAMENT";
 
 export interface IGetAllContestants {
     type: typeof GET_ALL_CONTESTANTS;
-    contestants: IContestant[];
+    contestants: Contestant[];
 }
 
 export interface IGetContestant {
     type: typeof GET_CONTESTANT;
-    contestant: IContestant;
+    contestant: Contestant;
 }
 
 export interface IGetAllResults {
     type: typeof GET_ALL_RESULTS;
-    results: IResult[];
+    results: Result[];
 }
 
 export interface IGetResult {
     type: typeof GET_RESULT;
-    result: IResult;
+    result: Result;
 }
 
 export interface IGetTournament {
     type: typeof GET_TOURNAMENT;
-    tournament: ITournament;
+    tournament: Tournament;
 }
 
 export type AllActionTypes =

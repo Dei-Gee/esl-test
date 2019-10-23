@@ -1,17 +1,21 @@
+import axios from "axios";
 import { Dispatch } from "redux";
+import { Contestant } from "../types/Contestant";
 import { AppState } from "./../store/configureStore";
-import { IContestant } from "./../types/IContestant";
 import { AppActions, GET_ALL_CONTESTANTS } from "./../types/index";
-import { IResult } from "./../types/IResult";
-import { ITournament } from "./../types/ITournament";
+import { Result } from "./../types/Result";
+import { Tournament } from "./../types/Tournament";
 
-export const getAllContestants = (contestants: IContestant[]): AppActions => ({
+export const getAllContestants = (contestants: Contestant[]): AppActions => ({
     contestants,
     type: GET_ALL_CONTESTANTS,
 });
 
-export const startGetAllContestants = (contestants: IContestant[]) => {
+export const startGetAllContestants = () => {
     return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
-        dispatch(getAllContestants(contestants));
+        axios.get("https://api.eslgaming.com/play/v1/leagues/177161/contestants")
+        .then((response) => {
+            dispatch(getAllContestants(response.data));
+        });
     };
 };
