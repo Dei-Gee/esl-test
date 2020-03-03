@@ -113,4 +113,5 @@ export class Tournament implements ITournament {
         };
     };
     public cupMode!: string;
+
 }

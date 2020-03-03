@@ -8,7 +8,7 @@ export const startGetTournament = (tourneyId: string) => {
         tournament,
         type: GET_TOURNAMENT,
     });
-    
+
     return (dispatch: Dispatch<AppActions>) => {
         axios.get(`https://api.eslgaming.com/play/v1/leagues/${tourneyId}`)
         .then((response) => {
