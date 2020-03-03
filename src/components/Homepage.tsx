@@ -28,8 +28,7 @@ type Props = IHomepageProps & ILinkStateProps & ILinkDispatchProps;
 class Homepage extends React.Component<Props, IHomepageState> {
       public componentDidMount = () => {
         try {
-            if(this.props.tournament === null || this.props.tournament === undefined)
-            {
+            if (this.props.tournament === null || this.props.tournament === undefined) {
                 this.props.startGetTournament(this.props.match.params.tourneyId);
             }
         } catch (e) {
@@ -42,7 +41,7 @@ class Homepage extends React.Component<Props, IHomepageState> {
 
         if (this.props.tournament === null || this.props.tournament === undefined) {
             return (
-                <div> Loading... </div>                
+                <div> Loading... </div>
              );
         } else {
             return(
