@@ -18,7 +18,7 @@ class ErrorPage extends React.Component<ErrorPageProps, ErrorPageState> {
             <div>
                 <h1> Error! Please enter a tourney id in the address bar!</h1>
                 <p>
-                    please note that the format of the address should be in
+                    Please note that the format of the address should be in
                      the format of https://mywebsite.ca/[tourneyid] e.g.https://mywebsite.ca/177161
                 </p>
             </div>
