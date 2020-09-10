@@ -6,6 +6,8 @@ import { timeStringToDate, sortResults } from "../utils/utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
+const bandaidURL = "https://cors-anywhere.herokuapp.com/";
+
 export interface IMatchResultsProps {
     tourneyId: string;
 }
@@ -33,11 +35,11 @@ class MatchResults extends React.Component<IMatchResultsProps, IMatchResultsStat
         try {
             // one render to rule them all - yay for Promises
             Promise.all([
-                axios.get(`https://api.eslgaming.com/play/v1/leagues/${this.props.tourneyId}/results`)
+                axios.get(`${bandaidURL}https://api.eslgaming.com/play/v1/leagues/${this.props.tourneyId}/results`)
                 .then((response) => {
                     return response.data;
                 }),
-                axios.get(`https://api.eslgaming.com/play/v1/leagues/${this.props.tourneyId}/contestants`)
+                axios.get(`${bandaidURL}https://api.eslgaming.com/play/v1/leagues/${this.props.tourneyId}/contestants`)
                 .then((response) => {
                     return response.data;
                 })
